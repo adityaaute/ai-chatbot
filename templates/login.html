@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="login-bg">
+
+<div class="login-box">
+  <h2>Welcome Back 👋</h2>
+
+  <input id="email" type="email" placeholder="Enter Email">
+
+  <div class="input-group">
+    <input id="password" type="password" placeholder="Enter Password">
+    <span class="toggle-pass" onclick="togglePass()">Show</span>
+  </div>
+
+  <button id="login-btn">Login</button>
+  <button id="google-btn" class="google-btn">Google Login</button>
+
+  <div id="error" class="error-msg"></div>
+
+  <p>No account? <a href="/signup">Sign up</a></p>
+</div>
+
+<script type="module">
+import { emailLogin, googleLogin } from "/static/auth.js";
+
+const btn = document.getElementById("login-btn");
+const errorBox = document.getElementById("error");
+
+btn.onclick = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    errorBox.innerText = "Please fill all fields";
+    return;
+  }
+
+  btn.innerHTML = '<span class="loader"></span>';
+
+  try {
+    await emailLogin(email, password);
+  } catch (e) {
+    errorBox.innerText = e.message;
+    btn.innerHTML = "Login";
+  }
+};
+
+document.getElementById("google-btn").onclick = () => {
+  googleLogin();
+};
+
+window.togglePass = () => {
+  const pass = document.getElementById("password");
+  pass.type = pass.type === "password" ? "text" : "password";
+};
+</script>
+
+</body>
+</html>

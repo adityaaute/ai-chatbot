@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ChatGPT Clone</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+        <h2>ChatGPT Clone</h2>
+
+        <button id="new-chat" class="newchat-btn">+ New Chat</button>
+
+        <div id="chat-list"></div>
+
+        <div id="user-panel">
+            <p id="user-name">Loading...</p>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
+    </div>
+
+    <!-- MAIN CHAT AREA -->
+    <div id="chat-area">
+        <div id="chat-box"></div>
+
+        <form id="input-form">
+            <input id="user-input" type="text" placeholder="Send a message..." autocomplete="off" />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- AUTH JS -->
+<script type="module" src="/static/auth.js"></script> 
+
+<!-- CHAT JS -->
+ <script type="module" src="/static/script.js"></script> 
+
+<!-- AUTH CONTROL -->
+<script type="module">
+    import { logoutUser, authStateListener } from "/static/auth.js";
+
+    authStateListener(); // Protects chat page + loads user info
+
+    document.getElementById("logout-btn").onclick = () => {
+        logoutUser();
+    };
+</script>
+
+</body>
+</html>
